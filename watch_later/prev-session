@@ -1,11 +1,14 @@
 [playlist]
-5
-File=/home/srinath/Downloads/Compressed/The-Git-&-Github-Bootcamp-2/12 - Fetching & Pulling/001 What Really Matters In This Section.mp4
-File=/home/srinath/Downloads/Compressed/The-Git-&-Github-Bootcamp-2/12 - Fetching & Pulling/002 Remote Tracking Branches WTF Are They.mp4
-File=/home/srinath/Downloads/Compressed/The-Git-&-Github-Bootcamp-2/12 - Fetching & Pulling/003 Checking Out Remote Tracking Branches.mp4
-File=/home/srinath/Downloads/Compressed/The-Git-&-Github-Bootcamp-2/12 - Fetching & Pulling/004 Working With Remote Branches.mp4
-File=/home/srinath/Downloads/Compressed/The-Git-&-Github-Bootcamp-2/12 - Fetching & Pulling/005 Git Fetch The Basics.mp4
-File=/home/srinath/Downloads/Compressed/The-Git-&-Github-Bootcamp-2/12 - Fetching & Pulling/006 Demonstrating Git Fetch.mp4
-File=/home/srinath/Downloads/Compressed/The-Git-&-Github-Bootcamp-2/12 - Fetching & Pulling/007 Git Pull The Basics.mp4
-File=/home/srinath/Downloads/Compressed/The-Git-&-Github-Bootcamp-2/12 - Fetching & Pulling/008 Git Pull & Merge Conflicts.mp4
-File=/home/srinath/Downloads/Compressed/The-Git-&-Github-Bootcamp-2/12 - Fetching & Pulling/009 A Shorter Syntax For Git Pull.mp4
+10
+File=/home/srinath/Downloads/Compressed/The-Git-&-Github-Bootcamp-2/06 - Working With Branches/001 What Really Matters In This Section.mp4
+File=/home/srinath/Downloads/Compressed/The-Git-&-Github-Bootcamp-2/06 - Working With Branches/002 Introducing Branches.mp4
+File=/home/srinath/Downloads/Compressed/The-Git-&-Github-Bootcamp-2/06 - Working With Branches/003 The Master Branch (Or Is It Main).mp4
+File=/home/srinath/Downloads/Compressed/The-Git-&-Github-Bootcamp-2/06 - Working With Branches/004 What On Earth Is HEAD.mp4
+File=/home/srinath/Downloads/Compressed/The-Git-&-Github-Bootcamp-2/06 - Working With Branches/005 Viewing All Branches With Git Branch.mp4
+File=/home/srinath/Downloads/Compressed/The-Git-&-Github-Bootcamp-2/06 - Working With Branches/006 Creating & Switching Branches.mp4
+File=/home/srinath/Downloads/Compressed/The-Git-&-Github-Bootcamp-2/06 - Working With Branches/007 More Practice With Branching.mp4
+File=/home/srinath/Downloads/Compressed/The-Git-&-Github-Bootcamp-2/06 - Working With Branches/008 Another Option Git Checkout Vs. Git Switch.mp4
+File=/home/srinath/Downloads/Compressed/The-Git-&-Github-Bootcamp-2/06 - Working With Branches/009 Switching Branches With Unstaged Changes.mp4
+File=/home/srinath/Downloads/Compressed/The-Git-&-Github-Bootcamp-2/06 - Working With Branches/010 Deleting & Renaming Branches.mp4
+File=/home/srinath/Downloads/Compressed/The-Git-&-Github-Bootcamp-2/06 - Working With Branches/011 How Git Stores HEAD & Branches.mp4
+File=/home/srinath/Downloads/Compressed/The-Git-&-Github-Bootcamp-2/06 - Working With Branches/012 Branching Exercise.mp4
