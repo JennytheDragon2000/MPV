@@ -1,0 +1,7 @@
+mp.register_script_message("save-timestamp", function(name)
+	local timestamp = mp.get_property("time-pos")
+	local filename = mp.get_property("filename")
+	local file = io.open(filename .. "_" .. name .. ".txt", "w")
+	file:write(timestamp)
+	file:close()
+end)
