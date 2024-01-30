@@ -14,9 +14,11 @@
     You can disable the automatic stuff and use script messages to load/save playlists as well
 
     script-message save-session [session-file]
-    script-message reload-session [session-file]
+    script-message reload-session [session-file] [load_playlist]
 
-    If not included `session-file` will use the default file specified in script-opts
+    If not included `session-file` will use the default file specified in script-opts.
+    `load_playlist` controls whether the whole playlist should be restored or just the one file,
+    the value can be `yes` or `no`. If not included it defaults to the value of the `load_playlist` script opt.
 
     available at: https://github.com/CogentRedTester/mpv-scripts
 ]]--
@@ -27,17 +29,22 @@ local opt = require 'mp.options'
 local msg = require 'mp.msg'
 
 local o = {
-    --disables the script from automatically saving the prev session
+    --automatically save the prev session
     auto_save = true,
 
     --runs the script automatically when started in idle mode and no files are in the playlist
     auto_load = true,
+
+    --reloads the full playlist from the previous session
+    --can be individually overwritten when sending script-messages
+    load_playlist = true,
 
     --file path of the default session file
     --save it as a .pls file to be able to open directly (though it will not maintain the playlist positions)
     session_file = "",
 
     --maintain position in the playlist
+    --does nothing if load_playlist is disabled
     maintain_pos = true,
 }
 
@@ -46,7 +53,7 @@ opt.read_options(o, 'keep_session', function() end)
 --sets the default session file to the watch_later directory or ~~/watch_later/
 if o.session_file == "" then
     local watch_later = mp.get_property('watch-later-directory', "")
-    if watch_later == "" then watch_later = "~~/watch_later/" end
+    if watch_later == "" then watch_later = "~~state/watch_later/" end
     if not watch_later:find("[/\\]$") then watch_later = watch_later..'/' end
 
     o.session_file = watch_later.."prev-session"
@@ -88,8 +95,12 @@ local function save_playlist(file)
 end
 
 --turns the previous json string into a table and adds all the files to the playlist
-local function load_prev_session(file)
-    if not file then file = save_file end
+local function load_prev_session(file, load_playlist)
+    if not file or file == '' then file = save_file end
+
+    if load_playlist == 'yes' then load_playlist = true
+    elseif load_playlist == 'no' then load_playlist = false
+    else load_playlist = o.load_playlist end
 
     --loads the previous session file
     msg.verbose('loading previous session from', file)
@@ -99,21 +110,41 @@ local function load_prev_session(file)
     --or if someone manually deletes the previous session file
     if session == nil or session:read() ~= "[playlist]" then
         msg.verbose('no previous session, cancelling load')
+        if session then session:close() end
         return
     end
 
-    local previous_playlist_pos
-    local pl_start
-    if o.maintain_pos then
-        previous_playlist_pos = session:read()
-        msg.verbose("restoring playlist position", previous_playlist_pos)
-        pl_start = mp.get_property('playlist-start')
-        mp.set_property('playlist-start', previous_playlist_pos)
+    local previous_playlist_pos = session:read('*n')
+
+    if load_playlist then
+        msg.debug('reloading playlist')
+
+        if not o.maintain_pos then
+            mp.commandv('loadlist', file)
+        else
+            local prev_playlist_start = mp.get_property('playlist-start')
+            msg.verbose("restoring playlist position", previous_playlist_pos)
+            mp.set_property_number('playlist-start', previous_playlist_pos)
+
+            mp.commandv('loadlist', file)
+
+            -- restore the original value unless the `playlist-start` property has been otherwise modified
+            if mp.get_property_number('playlist-start') ~= previous_playlist_pos then
+                mp.set_property('playlist-start', prev_playlist_start)
+            end
+        end
+    else
+        msg.debug('discarding playlist')
+        local files = {}
+        for line in session:lines() do
+            table.insert(files, string.match(line, 'File=(.+)'))
+        end
+
+        -- mpv and keep-session uses 0 based array indices, but lua uses 1-based
+        mp.commandv('loadfile', files[previous_playlist_pos+1])
     end
 
     session:close()
-    mp.commandv('loadlist', file)
-    if o.maintain_pos then mp.set_property('playlist-start', pl_start) end
 end
 
 local function shutdown()
