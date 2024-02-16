@@ -6,7 +6,7 @@ local HISTFILE = (os.getenv("APPDATA") or os.getenv("HOME") .. "/.config") .. "/
 mp.register_event("file-loaded", function()
 	local path = mp.get_property("path")
 	local working_directory = mp.get_property("working-directory")
-	local absolute_path = working_directory .. "" .. path
+	local absolute_path = working_directory .. "/" .. path
 
 	local logfile = io.open(HISTFILE, "a+")
 	-- logfile:write(("[%s] %s\n"):format(os.date("%d/%b/%y %X"), absolute_path))
